@@ -30,7 +30,10 @@
             '<p>' + tweet.created_at + '</p>'
           );
 
-          $tweetDiv.find('.link-username').on('click', function() {
+          $tweetDiv.find('.link-username').on('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            
             feed = streams.users[tweet.user];
             renderFeed();
           });
