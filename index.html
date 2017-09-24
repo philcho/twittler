@@ -20,23 +20,25 @@
         var feed = streams.home;
         var numTweetsDisplayed = streams.home.length;
 
-
-        // format tweet, add event listener, add to feed
+        // Format tweet, add event listener, add to feed
         var addToFeed = function(tweet) {
           var $tweetDiv = $('<div class="tweet"></div>');
+
           $tweetDiv.append(
             '<p><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
             '<p>' + tweet.message + '</p>' +
             '<p>' + tweet.created_at + '</p>'
           );
-          $tweetDiv.prependTo($feedDiv);
+
           $tweetDiv.find('.link-username').on('click', function() {
             feed = streams.users[tweet.user];
             renderFeed();
           });
+
+          $tweetDiv.prependTo($feedDiv);
         };
 
-        // update counter that shows number of tweets not displayed yet
+        // Update counter that shows number of tweets not displayed yet
         var updateNewTweetCounter = function(numNewTweets) {
           if ($('.show-new-tweets').hasClass('hide')) {
             $('.show-new-tweets').removeClass('hide');
@@ -48,40 +50,37 @@
           $('.show-new-tweets').text(counterText);
         };
 
-        // check if there are any new tweets that aren't displayed yet
+        // Check if there are any new tweets that aren't displayed yet
         var checkForNewTweets = function() {
           var numNewTweets = feed.length - numTweetsDisplayed;
 
-          // if there are new tweets...
           if (numNewTweets > 0) {
-            /// update the counter
             updateNewTweetCounter(numNewTweets);
           }
         };
 
-        // show new tweets
+        // Show new tweets
         var showNewTweets = function() {
-          // determine how many tweets are hidden
+          // Determine how many tweets are hidden
           var streamLen = feed.length;
           var numNewTweets = streamLen - numTweetsDisplayed;
 
-          // loop through hidden tweets...
+          // Loop through hidden tweets...
           for (var i = numTweetsDisplayed; i < streamLen; i++) {
-            // display tweet at the top of the feed
             var tweet = feed[i];
             addToFeed(tweet);
           }
-          // update global var
+
+          // Update global var
           numTweetsDisplayed += numNewTweets;
 
-          // hide "show new tweets" link
+          // Hide "show new tweets" link
           $('.show-new-tweets').addClass('hide');
         };
 
 
-        // render home or user feed
+        // Render home or user feed
         var renderFeed = function() {
-          // clear feed div
           $feedDiv.html('');
 
           var feedLen = feed.length;
@@ -100,7 +99,7 @@
         // Initial feed render (home)
         renderFeed();
 
-        // auto-check for new tweets
+        // Auto-check for new tweets
         setInterval(function() {
           checkForNewTweets();
         });
