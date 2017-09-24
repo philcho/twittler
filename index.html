@@ -17,9 +17,8 @@
       $(document).ready(function(){
         var $body = $('body');
         var $feedDiv = $('.feed');
+        var feedName = 'home';
         var numTweetsDisplayed = streams.home.length;
-
-        //$body.html('');
 
 
         // format tweet and add to feed
@@ -31,7 +30,11 @@
             '<p>' + tweet.created_at + '</p>'
           );
           $tweetDiv.prependTo($feedDiv);
-        }
+          $tweetDiv.find('.link-username').on('click', function() {
+            feedName = tweet.user;
+            renderFeed(feedName);
+          });
+        };
 
         // update counter that shows number of tweets not displayed yet
         var updateNewTweetCounter = function(numNewTweets) {
@@ -41,29 +44,32 @@
           }
 
           $('.new-tweet-counter').text(numNewTweets);
-        }
+        };
 
         // check if there are any new tweets that aren't displayed yet
         var checkForNewTweets = function() {
-          var numNewTweets = streams.home.length - numTweetsDisplayed;
+          var feed = (feedName === 'home') ? streams.home : streams.users[feedName];
+          var numNewTweets = feed.length - numTweetsDisplayed;
 
           // if there are new tweets...
           if (numNewTweets > 0) {
             /// update the counter
             updateNewTweetCounter(numNewTweets);
           }
-        }
+        };
 
         // show new tweets
         var showNewTweets = function() {
+          var feed = (feedName === 'home') ? streams.home : streams.users[feedName];
+
           // determine how many tweets are hidden
-          var streamLen = streams.home.length;
+          var streamLen = feed.length;
           var numNewTweets = streamLen - numTweetsDisplayed;
 
           // loop through hidden tweets...
           for (var i = numTweetsDisplayed; i < streamLen; i++) {
             // display tweet at the top of the feed
-            var tweet = streams.home[i];
+            var tweet = feed[i];
             addToFeed(tweet);
           }
           // update global var
@@ -71,18 +77,29 @@
 
           // hide "show new tweets" link
           $('.show-new-tweets').addClass('hide');
-        }
+        };
 
 
-        // Initial feed display
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          addToFeed(tweet);
-          index -= 1;
-        }
+        // render home or user feed
+        var renderFeed = function() {
+          var feed = (feedName === 'home') ? streams.home : streams.users[feedName];
 
-        // auto-check
+          // reset feed
+          $feedDiv.html('');
+
+          var index = feed.length - 1;
+
+          while(index >= 0){
+            var tweet = feed[index];
+            addToFeed(tweet);
+            index -= 1;
+          };
+        };
+
+        // Initial feed render (home)
+        renderFeed('home');
+
+        // auto-check for new tweets
         setInterval(function() {
           checkForNewTweets();
         });
