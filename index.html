@@ -17,20 +17,17 @@
       $(document).ready(function(){
         var $body = $('body');
         var $feedDiv = $('.feed');
+        var numTweetsDisplayed = streams.home.length;
+
         //$body.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
+
+        // format tweet and add to feed
+        var addToFeed = function(tweet) {
           var $tweet = $('<div></div>');
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
           $tweet.prependTo($feedDiv);
-          index -= 1;
         }
-
-
-        // Init
-        var numTweetsDisplayed = streams.home.length;
 
         // update counter that shows number of tweets not displayed yet
         var updateNewTweetCounter = function(numNewTweets) {
@@ -42,7 +39,7 @@
           $('.new-tweet-counter').text(numNewTweets);
         }
 
-        // checks if there are any new tweets that aren't displayed yet
+        // check if there are any new tweets that aren't displayed yet
         var checkForNewTweets = function() {
           var numNewTweets = streams.home.length - numTweetsDisplayed;
 
@@ -63,15 +60,22 @@
           for (var i = numTweetsDisplayed; i < streamLen; i++) {
             // display tweet at the top of the feed
             var tweet = streams.home[i];
-            var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message);
-            $tweet.prependTo($feedDiv);
+            addToFeed(tweet);
           }
           // update global var
           numTweetsDisplayed += numNewTweets;
 
           // hide "show new tweets" link
           $('.show-new-tweets').addClass('hide');
+        }
+
+
+        // Initial feed display
+        var index = streams.home.length - 1;
+        while(index >= 0){
+          var tweet = streams.home[index];
+          addToFeed(tweet);
+          index -= 1;
         }
 
         // auto-check
