@@ -24,9 +24,13 @@
 
         // format tweet and add to feed
         var addToFeed = function(tweet) {
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.prependTo($feedDiv);
+          var $tweetDiv = $('<div class="tweet"></div>');
+          $tweetDiv.append(
+            '<p><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
+            '<p>' + tweet.message + '</p>' +
+            '<p>' + tweet.created_at + '</p>'
+          );
+          $tweetDiv.prependTo($feedDiv);
         }
 
         // update counter that shows number of tweets not displayed yet
