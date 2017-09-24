@@ -9,12 +9,14 @@
 
     <p><a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a></p>
 
+    <div class="feed"></div>
 
 
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
+        var $feedDiv = $('.feed');
         //$body.html('');
 
         var index = streams.home.length - 1;
@@ -22,7 +24,7 @@
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.prependTo($feedDiv);
           index -= 1;
         }
 
@@ -32,25 +34,50 @@
 
         // update counter that shows number of tweets not displayed yet
         var updateNewTweetCounter = function(numNewTweets) {
-          console.log('updating counter...');
-          $('.show-new-tweets').removeClass('hide');
+          if ($('.show-new-tweets').hasClass('hide')) {
+            $('.show-new-tweets').removeClass('hide');
+            $('.show-new-tweets').on('click', showNewTweets);
+          }
+
           $('.new-tweet-counter').text(numNewTweets);
         }
 
         // checks if there are any new tweets that aren't displayed yet
         var checkForNewTweets = function() {
-          console.log('checking...');
           var numNewTweets = streams.home.length - numTweetsDisplayed;
 
+          // if there are new tweets...
           if (numNewTweets > 0) {
+            /// update the counter
             updateNewTweetCounter(numNewTweets);
           }
+        }
+
+        // show new tweets
+        var showNewTweets = function() {
+          // determine how many tweets are hidden
+          var streamLen = streams.home.length;
+          var numNewTweets = streamLen - numTweetsDisplayed;
+
+          // loop through hidden tweets...
+          for (var i = numTweetsDisplayed; i < streamLen; i++) {
+            // display tweet at the top of the feed
+            var tweet = streams.home[i];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message);
+            $tweet.prependTo($feedDiv);
+          }
+          // update global var
+          numTweetsDisplayed += numNewTweets;
+
+          // hide "show new tweets" link
+          $('.show-new-tweets').addClass('hide');
         }
 
         // auto-check
         setInterval(function() {
           checkForNewTweets();
-        }, 5000);
+        });
 
       });
 
