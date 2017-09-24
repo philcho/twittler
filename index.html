@@ -21,7 +21,7 @@
         var numTweetsDisplayed = streams.home.length;
 
 
-        // format tweet and add to feed
+        // format tweet, add event listener, add to feed
         var addToFeed = function(tweet) {
           var $tweetDiv = $('<div class="tweet"></div>');
           $tweetDiv.append(
@@ -43,7 +43,9 @@
             $('.show-new-tweets').on('click', showNewTweets);
           }
 
-          $('.new-tweet-counter').text(numNewTweets);
+          var s = (numNewTweets > 1) ? 's' : '';
+          var counterText = 'Show ' + numNewTweets + ' new tweet' + s;
+          $('.show-new-tweets').text(counterText);
         };
 
         // check if there are any new tweets that aren't displayed yet
@@ -82,13 +84,17 @@
           // clear feed div
           $feedDiv.html('');
 
-          var index = feed.length - 1;
+          var feedLen = feed.length;
+          var index = feedLen - 1;
 
           while(index >= 0){
             var tweet = feed[index];
             addToFeed(tweet);
             index -= 1;
           };
+
+          numTweetsDisplayed = feedLen;
+          $('.show-new-tweets').addClass('hide');
         };
 
         // Initial feed render (home)
