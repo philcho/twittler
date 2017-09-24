@@ -3,11 +3,15 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body>
 
-    <p><a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a></p>
+    <p>
+      <a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a>
+      <a class="back-to-home hide" href="#">Back to Home</a>
+    </p>
 
     <div class="feed"></div>
 
@@ -33,7 +37,7 @@
           $tweetDiv.find('.link-username').on('click', function(event) {
             event.stopPropagation();
             event.preventDefault();
-            
+
             feed = streams.users[tweet.user];
             renderFeed();
           });
@@ -81,6 +85,14 @@
           $('.show-new-tweets').addClass('hide');
         };
 
+        // Show link back to home feed
+        var showBackHomeLink = function() {
+          $('.back-to-home').removeClass('hide');
+          $('.back-to-home').on('click', function() {
+            feed = streams.home;
+            renderFeed();
+          });
+        }
 
         // Render home or user feed
         var renderFeed = function() {
@@ -97,6 +109,12 @@
 
           numTweetsDisplayed = feedLen;
           $('.show-new-tweets').addClass('hide');
+
+          if (feed === streams.home) {
+            $('.back-to-home').addClass('hide');
+          } else {
+            showBackHomeLink();
+          }
         };
 
         // Initial feed render (home)
