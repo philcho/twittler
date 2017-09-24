@@ -3,13 +3,19 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link href="styles.css" rel="stylesheet" />
   </head>
   <body>
+
+    <p><a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a></p>
+
+
+
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        //$body.html('');
 
         var index = streams.home.length - 1;
         while(index >= 0){
@@ -20,8 +26,36 @@
           index -= 1;
         }
 
+
+        // Init
+        var numTweetsDisplayed = streams.home.length;
+
+        // update counter that shows number of tweets not displayed yet
+        var updateNewTweetCounter = function(numNewTweets) {
+          console.log('updating counter...');
+          $('.show-new-tweets').removeClass('hide');
+          $('.new-tweet-counter').text(numNewTweets);
+        }
+
+        // checks if there are any new tweets that aren't displayed yet
+        var checkForNewTweets = function() {
+          console.log('checking...');
+          var numNewTweets = streams.home.length - numTweetsDisplayed;
+
+          if (numNewTweets > 0) {
+            updateNewTweetCounter(numNewTweets);
+          }
+        }
+
+        // auto-check
+        setInterval(function() {
+          checkForNewTweets();
+        }, 5000);
+
       });
 
+
     </script>
+
   </body>
 </html>
