@@ -40,7 +40,7 @@
         }
 
         // Format tweet, add event listener, add to feed
-        var addToFeed = function(tweet) {
+        var addTweetToFeed = function(tweet) {
           var $tweetDiv = $('<div class="tweet"></div>');
 
           var timeFromNow = moment(tweet.created_at).fromNow();
@@ -92,7 +92,7 @@
           // Loop through hidden tweets...
           for (var i = numTweetsDisplayed; i < streamLen; i++) {
             var tweet = feed[i];
-            addToFeed(tweet);
+            addTweetToFeed(tweet);
           }
 
           // Update global var
@@ -106,7 +106,7 @@
         };
 
         // Show link back to home feed
-        var showBackHomeLink = function() {
+        var showHomeLink = function() {
           $('.back-to-home').removeClass('hide');
           $('.back-to-home').on('click', function() {
             feed = streams.home;
@@ -123,7 +123,7 @@
 
           for (var i = 0; i < feedLen; i++) {
             var tweet = feed[i];
-            addToFeed(tweet);
+            addTweetToFeed(tweet);
           };
 
           numTweetsDisplayed = feedLen;
@@ -132,7 +132,7 @@
           if (feed === streams.home) {
             $('.back-to-home').addClass('hide');
           } else {
-            showBackHomeLink();
+            showHomeLink();
           }
 
           updateTimestamps();
