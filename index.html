@@ -3,6 +3,7 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link href="styles.css" rel="stylesheet" />
   </head>
@@ -24,14 +25,30 @@
         var feed = streams.home;
         var numTweetsDisplayed = streams.home.length;
 
+        // Update timestamps when...
+        // - new tweets are loaded
+        // - switching feeds
+        var updateTimestamps = function() {
+          var visibleTweets = $('.tweet');
+
+          for (var i = 0; i < visibleTweets.length; i++) {
+            var timeEl = $(visibleTweets[i]).find('.tweet-time');
+            var createdTime = timeEl.data('time');
+            var timeFromNow = moment(createdTime).fromNow();
+            timeEl.text(timeFromNow);
+          }
+        }
+
         // Format tweet, add event listener, add to feed
         var addToFeed = function(tweet) {
           var $tweetDiv = $('<div class="tweet"></div>');
 
+          var timeFromNow = moment(tweet.created_at).fromNow();
+
           $tweetDiv.prepend(
-            '<p><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
-            '<p>' + tweet.message + '</p>' +
-            '<p>' + tweet.created_at + '</p>'
+            '<p class="tweet-user"><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
+            '<p class="tweet-msg">' + tweet.message + '</p>' +
+            '<p class="tweet-time" data-time="' + tweet.created_at + '">' + timeFromNow + '</p>'
           );
 
           $tweetDiv.find('.link-username').on('click', function(event) {
@@ -83,6 +100,9 @@
 
           // Hide "show new tweets" link
           $('.show-new-tweets').addClass('hide');
+
+          // Update timestamps for all displayed tweets
+          updateTimestamps();
         };
 
         // Show link back to home feed
@@ -114,6 +134,8 @@
           } else {
             showBackHomeLink();
           }
+
+          updateTimestamps();
         };
 
         // Initial feed render (home)
