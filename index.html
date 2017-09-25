@@ -28,7 +28,7 @@
         var addToFeed = function(tweet) {
           var $tweetDiv = $('<div class="tweet"></div>');
 
-          $tweetDiv.append(
+          $tweetDiv.prepend(
             '<p><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
             '<p>' + tweet.message + '</p>' +
             '<p>' + tweet.created_at + '</p>'
@@ -101,10 +101,9 @@
           var feedLen = feed.length;
           var index = feedLen - 1;
 
-          while(index >= 0){
-            var tweet = feed[index];
+          for (var i = 0; i < feedLen; i++) {
+            var tweet = feed[i];
             addToFeed(tweet);
-            index -= 1;
           };
 
           numTweetsDisplayed = feedLen;
