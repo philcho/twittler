@@ -51,7 +51,9 @@ nav {
 nav a {
 	display: inline-block;
 	padding: 0 0.5em;
+	font-size: 14px;
 	font-weight: bold;
+	line-height: 18px;
 	letter-spacing: -1px;
 }
 
@@ -159,6 +161,11 @@ article {
 
 	#tweet-box {
 		width: calc(75% - 5em);
+	}
+
+	nav a {
+		font-size: 16px;
+		line-height: 1.5;
 	}
 
 	section {
