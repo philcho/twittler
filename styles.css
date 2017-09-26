@@ -48,31 +48,11 @@ nav {
 	text-align: center;
 }
 
-nav a {
-	display: inline-block;
-	padding: 0 0.5em;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 18px;
-	letter-spacing: -1px;
-}
-
-nav a:not(.hide) + a:not(.hide) {
-	border-left: 1px solid #222; /* Divider between "Back to home" and "Show # new tweets" links */
-}
-
-.show-new-tweets {
-	position: relative;
-	animation: 0.6s slidein;
-}
-
-section {
+.feed {
 	display: grid;
   grid-gap: 15px;
 	grid-auto-rows: minmax(200px, auto);
-}
-
-article {
+	margin-bottom: 60px;
 }
 
 
@@ -129,13 +109,56 @@ article {
 
 
 /* -------------------------
-	 TWEET
+	 NAV
 ------------------------- */
-
-.tweet {
-	border: 1px dotted #999;
+nav a {
+	display: inline-block;
+	padding: 0 0.5em;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 18px;
+	letter-spacing: -1px;
 }
 
+nav a:not(.hide) + a:not(.hide) {
+	border-left: 1px solid #222; /* Divider between "Back to home" and "Show # new tweets" links */
+}
+
+.show-new-tweets {
+	position: relative;
+	animation: 0.6s slidein;
+}
+
+
+/* -------------------------
+	 TWEET
+------------------------- */
+.tweet {
+	padding: 15px;
+	border: 2px dashed #222;
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.tweet-user {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 18px;
+	letter-spacing: -0.5px;
+}
+
+.tweet-msg {
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 1;
+	letter-spacing: -1.5px;
+}
+
+.tweet-time {
+	font-size: 12px;
+	line-height: 18px;
+	letter-spacing: -0.5px;
+}
 
 /* -------------------------
 	 ANIMATIONS
@@ -168,7 +191,7 @@ article {
 		line-height: 1.5;
 	}
 
-	section {
+	.feed {
   	grid-template-columns: repeat(3, 1fr);
   	grid-auto-rows: minmax(200px, auto);
 	}
@@ -196,14 +219,32 @@ article {
 		font-size: 12px;
 	}
 
-	section {
+	.feed {
   	grid-template-columns: repeat(4, 1fr);
   	grid-auto-rows: minmax(200px, auto);
 	}
 
 	/* Make latest tweet larger */
-	section article:nth-child(1) {
+	.tweet:nth-child(1) {
 		grid-column: 1 / 3;
 		grid-row: 1 / 3;
+		padding: 30px;
+	}
+
+	.tweet:nth-child(1) .tweet-user {
+		font-size: 24px;
+		line-height: 1.5;
+		letter-spacing: -1px
+	}
+
+	.tweet:nth-child(1) .tweet-msg {
+		font-size: 72px;
+		line-height: 60px;
+		letter-spacing: -4px;
+	}
+
+	.tweet:nth-child(1) .tweet-time {
+		font-size: 18px;
+		line-height: 1.5;
 	}
 }
