@@ -1,4 +1,11 @@
 
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #222;
+	background-color: #edf0f2;
+}
+
+
 /* -------------------------
 	 UTILITIES
 ------------------------- */
@@ -37,6 +44,58 @@ article {
 
 
 /* -------------------------
+	 HEADER
+------------------------- */
+.branding {
+	padding: 15px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	line-height: 1.5;
+}
+
+#tweet-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#tweet-box {
+	width: calc(100% - 5em);
+	padding: 0 1em;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 24px;
+	letter-spacing: -1px;
+	border: 2px solid #222;
+	border-radius: 1em;
+}
+
+#tweet-box:focus {
+	outline: none;
+}
+
+#tweet-box::placeholder {
+	color: #222;
+}
+
+#tweet-form button {
+	width: 5em;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: transparent;
+	border: 0;
+	cursor: pointer;
+}
+
+#tweet-form button:hover {
+	text-decoration: underline;
+}
+
+
+/* -------------------------
 	 TWEET
 ------------------------- */
 
@@ -51,6 +110,16 @@ article {
 
 /* Medium */
 @media screen and (min-width: 768px) {
+
+	.branding {
+		font-size: 18px;
+		line-height: 1.5;
+	}
+
+	#tweet-box {
+		width: calc(75% - 5em);
+	}
+
 	section {
   	grid-template-columns: repeat(3, 1fr);
   	grid-auto-rows: minmax(200px, auto);
@@ -62,6 +131,21 @@ article {
 	.container {
 		max-width: 1028px;
 		margin: 0 auto;
+	}
+
+	.branding {
+		font-size: 24px;
+		line-height: 1.5;
+	}
+
+	#tweet-box {
+		font-size: 24px;
+		line-height: 36px;
+		border-width: 3px;
+	}
+
+	#tweet-form button {
+		font-size: 12px;
 	}
 
 	section {
