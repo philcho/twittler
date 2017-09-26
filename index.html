@@ -9,17 +9,23 @@
   </head>
   <body>
 
-    <form id="tweet-form">
-      <input id="tweet-box" type="text" value="What's happening?" />
-      <button type="submit">Tweet</button>
-    </form>
+    <div class="container">
 
-    <p>
-      <a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a>
-      <a class="back-to-home hide" href="#">Back to Home</a>
-    </p>
+      <header class="main-header">
+        <form id="tweet-form">
+          <input id="tweet-box" type="text" value="What's happening?" />
+          <button type="submit">Tweet</button>
+        </form>
+      </header>
 
-    <div class="feed"></div>
+      <nav>
+        <a class="show-new-tweets hide" href="#">Show <span class="new-tweet-counter"></span> new tweets</a>
+        <a class="back-to-home hide" href="#">Back to Home</a>
+      </nav>
+
+      <section class="feed"></section>
+
+    </div><!-- /container -->
 
 
     <script>
@@ -58,14 +64,14 @@
 
         // Format tweet, add event listener, add to feed
         var addTweetToFeed = function(tweet) {
-          var $tweetDiv = $('<div class="tweet"></div>');
+          var $tweetDiv = $('<article class="tweet"></article>');
 
           var timeFromNow = moment(tweet.created_at).fromNow();
 
           $tweetDiv.prepend(
-            '<p class="tweet-user"><a class="link-username" href="#">@' + tweet.user + '</a></p>' +
+            '<header class="tweet-user"><a class="link-username" href="#">@' + tweet.user + '</a></header>' +
             '<p class="tweet-msg">' + tweet.message + '</p>' +
-            '<p class="tweet-time" data-time="' + tweet.created_at + '">' + timeFromNow + '</p>'
+            '<time class="tweet-time" data-time="' + tweet.created_at + '">' + timeFromNow + '</time>'
           );
 
           $tweetDiv.find('.link-username').on('click', function(event) {
@@ -166,8 +172,6 @@
         });
 
       });
-
-
     </script>
 
   </body>

@@ -1,3 +1,8 @@
+
+/* -------------------------
+	 UTILITIES
+------------------------- */
+
 .show {
 	display: block;
 }
@@ -6,8 +11,67 @@
 	display: none;
 }
 
-.tweet {
+
+/* -------------------------
+	 LAYOUT
+------------------------- */
+
+.container {
 	margin: 15px;
-	padding: 15px;
-	border: 1px solid #666;
+}
+
+.main-header {
+}
+
+nav {
+}
+
+section {
+	display: grid;
+  grid-gap: 15px;
+	grid-auto-rows: minmax(200px, auto);
+}
+
+article {
+}
+
+
+/* -------------------------
+	 TWEET
+------------------------- */
+
+.tweet {
+	border: 1px dotted #999;
+}
+
+
+/* -------------------------
+	 MEDIA QUERIES
+------------------------- */
+
+/* Medium */
+@media screen and (min-width: 768px) {
+	section {
+  	grid-template-columns: repeat(3, 1fr);
+  	grid-auto-rows: minmax(200px, auto);
+	}
+}
+
+/* Large */
+@media screen and (min-width: 1200px) {
+	.container {
+		max-width: 1028px;
+		margin: 0 auto;
+	}
+
+	section {
+  	grid-template-columns: repeat(4, 1fr);
+  	grid-auto-rows: minmax(200px, auto);
+	}
+
+	/* Make latest tweet larger */
+	section article:nth-child(1) {
+		grid-column: 1 / 3;
+		grid-row: 1 / 3;
+	}
 }
